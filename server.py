@@ -28,7 +28,7 @@ def create_and_transfer_nft_endpoint(request: NFTTransferRequest):
     product_uri = BASE_URL + "/" + "".join([choice(ALPHABET) for _ in range(10)])
     
     try:
-        wallet_receiver = create_and_transfer_nft(
+        wallet_receiver, NFT_token_id = create_and_transfer_nft(
             seed_company=seed_company,
             product_uri=product_uri,
             taxon=int(request.taxon),
@@ -38,7 +38,7 @@ def create_and_transfer_nft_endpoint(request: NFTTransferRequest):
         result = send_email(subject="Thank you for purchase, here is you NFT!", sender_email=COMPANY_EMAIL, recipient_email=request.email_receiver, wallet=wallet_receiver)
         print(f"{result = }")
         
-        return {"status": "success", "message": "NFT created and transferred successfully."}
+        return {"status": "success", "NFT": NFT_token_id, "message": "NFT created and transferred successfully."}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

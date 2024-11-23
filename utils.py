@@ -150,6 +150,6 @@ def create_and_transfer_nft(seed_company, product_uri, taxon, seed_receiver = No
         if not response_accept_sell_offer['meta']['TransactionResult'] == 'tesSUCCESS':
             raise Exception(f'Didn\'t work: {e}')
     
-        return wallet_receiver
+        return wallet_receiver, NFT_token_id
     except Exception as e:
         raise Exception(f'Didn\'t work: {e}')
